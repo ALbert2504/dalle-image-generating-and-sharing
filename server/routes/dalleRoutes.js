@@ -2,6 +2,8 @@ import express from 'express';
 import * as dotenv from 'dotenv';
 import { Configuration, OpenAIApi } from 'openai';
 
+import auth from '../middlewares/auth.js';
+
 dotenv.config();
 
 const router = express.Router();
@@ -16,7 +18,7 @@ router.route('/').get((req, res) => {
   res.send('Hello from DALL-E!');
 });
 
-router.route('/').post(async (req, res) => {
+router.route('/').post(auth, async (req, res) => {
   try {
     const { prompt } = req.body;
 

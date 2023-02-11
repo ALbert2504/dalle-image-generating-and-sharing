@@ -22,10 +22,11 @@ const CreatePost = () => {
       try {
         setGeneratingImg(true);
 
-        const resposne = await fetch('http://localhost:8080/api/v1/dalle', {
+        const resposne = await fetch(`${import.meta.env.VITE_API_URL}dalle`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            authorization: import.meta.env.VITE_SECRET_PASSWORD,
           },
           body: JSON.stringify({ prompt: form.prompt }),
         });
@@ -55,10 +56,11 @@ const CreatePost = () => {
       setLoading(true);
 
       try {
-        const response = await fetch('http://localhost:8080/api/v1/post', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}post`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            authorization: import.meta.env.VITE_SECRET_PASSWORD,
           },
           body: JSON.stringify(form),
         });

@@ -4,6 +4,8 @@ import { v2 as cloudinary } from 'cloudinary';
 
 import Post from '../mongodb/models/post.js';
 
+import auth from '../middlewares/auth.js';
+
 dotenv.config();
 
 const router = express.Router();
@@ -15,7 +17,7 @@ cloudinary.config({
 });
 
 // GET ALL POSTS
-router.route('/').get(async (req, res) => {
+router.route('/').get(auth, async (req, res) => {
   try {
     const posts = await Post.find({});
 
@@ -32,7 +34,7 @@ router.route('/').get(async (req, res) => {
 });
 
 // CREATE A POST
-router.route('/').post(async (req, res) => {
+router.route('/').post(auth, async (req, res) => {
   try {
     const { name, prompt, photo } = req.body;
     const photoUrl = await cloudinary.uploader.upload(photo);
